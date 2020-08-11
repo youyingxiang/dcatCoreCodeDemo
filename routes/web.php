@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix("example")->group(function (Illuminate\Routing\Router $router) {
+    $router->get('grid',"ExampleController@gridExample");
+});
