@@ -23,7 +23,7 @@ class Menu
             'id'        => 2,
             'title'     => '用户',
             'icon'      => '',
-            'uri'       => 'helpers/extensions',
+            'uri'       => 'example/grid',
             'parent_id' => 1,
         ],
     ];

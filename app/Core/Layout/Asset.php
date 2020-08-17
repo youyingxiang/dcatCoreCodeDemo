@@ -341,6 +341,31 @@ class Asset
         return "<style>$style</style>";
     }
 
+    public function scriptToHtml()
+    {
+        $script = implode(';', array_unique($this->script));
+        $directScript = implode(';', array_unique($this->directScript));
+
+        return <<<HTML
+<script>
+$(function () { 
+    try {
+        {$script}
+    } catch (e) {
+        console.error(e)
+    }
+});
+(function () {
+    try {
+        {$directScript}
+    } catch (e) {
+        console.error(e)
+    }
+})()
+</script>
+HTML;
+    }
+
     /**
      * Create a Asset instance.
      *

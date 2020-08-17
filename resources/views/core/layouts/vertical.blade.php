@@ -6,7 +6,7 @@
 
         <div class="app-content content">
             <div class="content-wrapper" style="top: 0;min-height: 900px;">
-                {{--@yield('app')--}}
+                @yield('app')
             </div>
         </div>
     </div>
@@ -25,8 +25,6 @@
             </button>
         </p>
     </footer>
-
-    {!! \App\Core\Layout\Asset::make()->jsToHtml()!!}
 
 </body>
 

@@ -27,6 +27,13 @@ class Content implements Renderable
      */
     protected $description = '';
 
+
+    /**
+     * @var Row[]
+     */
+    protected $rows = [];
+
+
     /**
      * Create a content instance.
      *
@@ -72,8 +79,33 @@ class Content implements Renderable
      */
     public function body($content): self
     {
+        return $this->row($content);
+    }
+
+    /**
+     * @param $content
+     */
+    public function row($content)
+    {
+        if ($content instanceof \Closure) {
+            $row = new Row();
+            call_user_func($content, $row);
+            $this->addRow($row);
+        } else {
+            $this->addRow(new Row($content));
+        }
+
         return $this;
-//        return $this->row($content);
+    }
+
+    /**
+     * Add Row.
+     *
+     * @param Row $row
+     */
+    protected function addRow(Row $row)
+    {
+        $this->rows[] = $row;
     }
 
 
@@ -123,9 +155,22 @@ class Content implements Renderable
     protected function variables(): array
     {
         return [
-            'header'          => $this->title,
-            'description'     => $this->description,
-//            'content'         => $this->build(),
+            'header'      => $this->title,
+            'description' => $this->description,
+            'content'     => $this->build(),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function build()
+    {
+        $html = '';
+        foreach ($this->rows as $row) {
+            $html .= $row->render();
+        }
+
+        return $html;
     }
 }
